@@ -1,3 +1,21 @@
 {
-  "extends": "next/core-web-vitals"
+  "ignorePatterns": ["next.config.js"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "next",
+    "prettier"
+  ],
+  "rules": {
+    "no-unused-vars": "off",
+    "sort-imports": "error",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ]
+  }
 }
