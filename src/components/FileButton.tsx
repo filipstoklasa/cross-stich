@@ -4,11 +4,13 @@ import { Button } from "@chakra-ui/react";
 interface FileButtonProps {
   onChange: (file: File) => void;
   accept?: string;
+  testId?: string;
 }
 
 export const FileButton = ({
   children,
   accept,
+  testId,
   onChange,
 }: PropsWithChildren<FileButtonProps>) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -27,6 +29,7 @@ export const FileButton = ({
     <>
       <Button onClick={onLoadPattern}>{children}</Button>
       <input
+        data-testid={testId || "file-input"}
         ref={inputRef}
         hidden
         type="file"

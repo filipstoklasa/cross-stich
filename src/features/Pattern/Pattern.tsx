@@ -92,17 +92,19 @@ export const Pattern = () => {
           </CardBody>
         </Card>
       </Slide>
-      <div
-        className="absolute"
-        style={{
-          width,
-          height,
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: position.map((item) => `${item}%`).join(" "),
-          backgroundSize: `${zoom}%`,
-          backgroundImage: background ? `url('${background}')` : "pink",
-        }}
-      />
+      {background && (
+        <div
+          className="absolute bg-no-repeat"
+          data-testid="pattern-layer"
+          style={{
+            width,
+            height,
+            backgroundPosition: position.map((item) => `${item}%`).join(" "),
+            backgroundSize: `${zoom}%`,
+            backgroundImage: `url('${background}')`,
+          }}
+        />
+      )}
     </>
   );
 };
