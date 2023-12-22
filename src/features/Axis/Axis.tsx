@@ -15,7 +15,11 @@ export const AxisX = () => {
   );
 
   return (
-    <div style={{ width: width + squareSize }} className="m-auto flex">
+    <div
+      data-testid="axis-x"
+      style={{ width: width + squareSize }}
+      className="m-auto flex"
+    >
       <div className="flex" style={{ paddingLeft: squareSize / 2 }}>
         {range.map((_, index) => (
           <div

@@ -75,10 +75,18 @@ export const LoadStatusControls = () => {
         >
           Browser config
         </Button>
-        <FileButton accept=".json" onChange={loadFileConfig}>
+        <FileButton
+          accept=".json"
+          testId="file-config"
+          onChange={loadFileConfig}
+        >
           File config
         </FileButton>
-        <FileButton accept=".png,.jpg" onChange={onInputChange}>
+        <FileButton
+          testId="background-pattern"
+          accept=".png,.jpg"
+          onChange={onInputChange}
+        >
           Background pattern
         </FileButton>
       </Flex>
