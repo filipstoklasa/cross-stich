@@ -4440,6 +4440,7 @@ exports[`drawScene 1`] = `
 
 exports[`getCoords 1`] = `
 {
+  "id": "100-100",
   "x": 4,
   "y": 4,
 }
