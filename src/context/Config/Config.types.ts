@@ -2,7 +2,7 @@ import type { CanvasState, Dimensions, Marker } from "@/features/Canvas";
 
 export interface DefaultConfig extends Dimensions {
   initialState?: CanvasState;
-  pattern?: File;
+  pattern?: string;
   autoSafeMode?: boolean;
   markers?: Marker[];
 }

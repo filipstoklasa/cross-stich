@@ -19,6 +19,20 @@ exports[`drawScene 1`] = `
     ],
   },
   "globalAlpha": 1,
+  "scale": [MockFunction spy] {
+    "calls": [
+      [
+        1,
+        1,
+      ],
+    ],
+    "results": [
+      {
+        "type": "return",
+        "value": undefined,
+      },
+    ],
+  },
   "strokeRect": [MockFunction spy] {
     "calls": [
       [

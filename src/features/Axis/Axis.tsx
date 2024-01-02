@@ -1,10 +1,18 @@
+import clsx from "clsx";
 import { useConfig } from "@/context/Config";
 import { useMemo } from "react";
 
-export const AxisX = () => {
+interface AxisProps {
+  sticky?: boolean;
+  gridArea?: string;
+}
+
+export const AxisX = ({ sticky, gridArea }: AxisProps) => {
   const {
-    config: { width, squareSize },
+    config: { width, squareSize, scale },
   } = useConfig();
+
+  const scaledSquareSize = squareSize * scale;
 
   const range = useMemo(
     () =>
@@ -17,17 +25,25 @@ export const AxisX = () => {
   return (
     <div
       data-testid="axis-x"
-      style={{ width: width + squareSize }}
-      className="m-auto flex"
+      style={{
+        width: width * scale,
+        gridArea,
+      }}
+      className={clsx("flex", sticky && "sticky top-0 bg-white z-10")}
     >
-      <div className="flex" style={{ paddingLeft: squareSize / 2 }}>
+      <div className="flex">
         {range.map((_, index) => (
           <div
             key={`${index}-x-tick`}
             className="flex justify-center align-items-center text-center whitespace-nowrap"
-            style={{ width: squareSize, height: squareSize }}
+            style={{ width: scaledSquareSize, height: scaledSquareSize }}
           >
-            <span style={{ fontSize: squareSize * 0.6 }}>{index + 1}</span>
+            <span
+              className="select-none"
+              style={{ fontSize: scaledSquareSize * 0.6 }}
+            >
+              {index + 1}
+            </span>
           </div>
         ))}
       </div>
@@ -35,10 +51,12 @@ export const AxisX = () => {
   );
 };
 
-export const AxisY = () => {
+export const AxisY = ({ sticky, gridArea }: AxisProps) => {
   const {
-    config: { height, squareSize },
+    config: { height, squareSize, scale },
   } = useConfig();
+
+  const scaledSquareSize = squareSize * scale;
 
   const range = useMemo(
     () =>
@@ -49,16 +67,24 @@ export const AxisY = () => {
   );
 
   return (
-    <div style={{ height }}>
+    <div
+      style={{ height: height * scale, marginTop: scaledSquareSize, gridArea }}
+      className={clsx(sticky && "sticky left-0 bg-white z-10")}
+    >
       {range.map((_, index) => (
         <div
           key={`${index}-y-tick`}
           className="flex text-center items-center justify-center px-1"
           style={{
-            height: squareSize,
+            height: scaledSquareSize,
           }}
         >
-          <span style={{ fontSize: squareSize * 0.6 }}>{index + 1}</span>
+          <span
+            className="select-none"
+            style={{ fontSize: scaledSquareSize * 0.6 }}
+          >
+            {index + 1}
+          </span>
         </div>
       ))}
     </div>

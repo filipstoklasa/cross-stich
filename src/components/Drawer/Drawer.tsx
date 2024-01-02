@@ -29,12 +29,8 @@ export const Drawer = ({
       <IconButton
         data-testid="menu-button"
         aria-label="menu"
-        position="fixed"
         onClick={disclosure.onToggle}
         icon={<HamburgerIcon />}
-        top={2}
-        left={2}
-        zIndex={100}
       />
       <ChakraDrawer
         size="md"

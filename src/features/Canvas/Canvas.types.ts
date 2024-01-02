@@ -7,6 +7,7 @@ export interface Dimensions {
   height: number;
   squareSize: number;
   marker: Marker;
+  scale: number;
 }
 
 export interface DrawRectParams {

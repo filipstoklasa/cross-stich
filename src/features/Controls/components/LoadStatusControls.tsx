@@ -7,6 +7,7 @@ import {
 import { useCallback, useEffect, useState } from "react";
 import { FileButton } from "@/components/FileButton";
 import { STATE } from "@/features/Canvas";
+import { getBase64 } from "../utils/getBase64";
 import { getText } from "@/features/Controls/utils/getText";
 import { useConfig } from "@/context/Config";
 import { useDrawer } from "@/components/Drawer";
@@ -57,7 +58,11 @@ export const LoadStatusControls = () => {
   };
 
   const onInputChange = (file: File) => {
-    setConfig({ pattern: file });
+    getBase64(file, (source) => {
+      if (source) {
+        setConfig({ pattern: source.toString() });
+      }
+    });
     onClose();
   };
 
@@ -84,7 +89,7 @@ export const LoadStatusControls = () => {
         </FileButton>
         <FileButton
           testId="background-pattern"
-          accept=".png,.jpg"
+          accept=".png,.jpg,.webp"
           onChange={onInputChange}
         >
           Background pattern
