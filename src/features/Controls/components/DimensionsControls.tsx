@@ -17,6 +17,7 @@ export const DimensionsControls = () => {
     (prop: keyof Dimensions) => (value: string | number) => {
       setConfig({
         [prop]: Number(value),
+        scale: 1,
       });
     };
 
@@ -35,6 +36,7 @@ export const DimensionsControls = () => {
         <Box flex={1}>
           <Select
             label="Width"
+            testId="scene-width-input"
             value={width}
             options={getDimensions(squareSize)}
             onChange={setDimensions("width")}
@@ -43,6 +45,7 @@ export const DimensionsControls = () => {
         <Box flex={1}>
           <Select
             label="Height"
+            testId="scene-height-input"
             value={height}
             options={getDimensions(squareSize)}
             onChange={setDimensions("height")}

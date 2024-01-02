@@ -4,7 +4,7 @@ import type { Marker } from "@/features/Canvas";
 import { useCallback } from "react";
 import { validateConfig } from "next/dist/server/config-shared";
 
-export interface Config extends Omit<DefaultConfig, "initialState"> {
+export interface Config extends Omit<DefaultConfig, "initialState" | "scale"> {
   initialState: Record<string, Marker>;
 }
 

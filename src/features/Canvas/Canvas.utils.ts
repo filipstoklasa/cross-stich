@@ -53,11 +53,12 @@ const drawSymbol = (
 export const getCoords = (
   clientX: number,
   clientY: number,
-  squareSize: number
+  squareSize: number,
+  scale: number
 ) => {
   const { left, top } = getScene().getBoundingClientRect();
-  const x = Math.floor((clientX - left) / squareSize);
-  const y = Math.floor((clientY - top) / squareSize);
+  const x = Math.floor((clientX - left) / squareSize / scale);
+  const y = Math.floor((clientY - top) / squareSize / scale);
   const id = getCoordsId(x * squareSize, y * squareSize);
 
   return {
@@ -90,10 +91,14 @@ export const fillRect = (
     clientX,
     clientY,
   }: Pick<MouseEvent<HTMLCanvasElement>, "clientX" | "clientY">,
-  { squareSize, marker }: Pick<Dimensions, "squareSize" | "marker">,
+  {
+    squareSize,
+    marker,
+    scale,
+  }: Pick<Dimensions, "squareSize" | "marker" | "scale">,
   isDragging?: boolean
 ) => {
-  const { x, y, id } = getCoords(clientX, clientY, squareSize);
+  const { x, y, id } = getCoords(clientX, clientY, squareSize, scale);
   const xCoord = x * squareSize;
   const yCoord = y * squareSize;
 
@@ -102,7 +107,6 @@ export const fillRect = (
     drawRect({ x: xCoord, y: yCoord, marker }, squareSize);
   } else if (isDragging && !isEqual(STATE.get(id), marker)) {
     STATE.set(id, marker);
-    drawRect({ x: xCoord, y: yCoord, marker: ERASER }, squareSize);
     drawRect({ x: xCoord, y: yCoord, marker }, squareSize);
   } else if (!isDragging) {
     STATE.delete(id);
@@ -117,8 +121,17 @@ export const drawScene = ({
   height,
   squareSize,
   initialState,
-}: Omit<Dimensions, "marker"> & { initialState?: Record<string, Marker> }) => {
+  scale,
+}: Omit<Dimensions, "marker"> & {
+  initialState?: Record<string, Marker>;
+}) => {
   clearScene(width, height);
+
+  const ctx = getSceneContext();
+
+  if (scale) {
+    ctx.scale(scale, scale);
+  }
 
   for (let x = 0; x <= width; x += squareSize) {
     for (let y = 0; y <= height; y += squareSize) {

@@ -4,6 +4,7 @@ import { drawScene, getCoords } from "../Canvas.utils";
 interface MockedContext {
   clearRect: Mock;
   strokeRect: Mock;
+  scale: Mock;
 }
 
 let canvas: HTMLCanvasElement | null;
@@ -14,6 +15,7 @@ beforeEach(() => {
   context = {
     clearRect: vi.fn(),
     strokeRect: vi.fn(),
+    scale: vi.fn(),
   };
 
   vi.mock("@/utils/sceneContext", async () => ({
@@ -29,10 +31,10 @@ afterEach(() => {
 });
 
 test("getCoords", () => {
-  expect(getCoords(100, 100, 25)).toMatchSnapshot();
+  expect(getCoords(100, 100, 25, 1)).toMatchSnapshot();
 });
 
 test("drawScene", () => {
-  drawScene({ width: 500, height: 500, squareSize: 25 });
+  drawScene({ width: 500, height: 500, squareSize: 25, scale: 1 });
   expect(context).toMatchSnapshot();
 });

@@ -1,3 +1,4 @@
+import { AxisX, AxisY } from "../Axis";
 import { type MouseEventHandler, useCallback, useEffect, useRef } from "react";
 import { drawScene, fillRect, getCoords } from "./Canvas.utils";
 import { STATE } from "./Canvas.constants";
@@ -9,7 +10,16 @@ export const Canvas = () => {
   const { setLocalConfig } = useSaveLocalConfig();
 
   const {
-    config: { width, height, squareSize, autoSafeMode, marker, ...config },
+    config: {
+      width,
+      height,
+      squareSize,
+      autoSafeMode,
+      marker,
+      scale,
+      initialState,
+      pattern,
+    },
   } = useConfig();
 
   const onAutoSave = useCallback(() => {
@@ -25,46 +35,79 @@ export const Canvas = () => {
   }, [autoSafeMode, marker, height, setLocalConfig, squareSize, width]);
 
   const onClick: MouseEventHandler<HTMLCanvasElement> = useCallback(
-    (event) => {
-      const { id } = fillRect(event, { squareSize, marker });
+    ({ clientX, clientY }) => {
+      const { id } = fillRect(
+        { clientX, clientY },
+        {
+          squareSize,
+          marker,
+          scale,
+        }
+      );
+
       isDrawing.current = id;
       onAutoSave();
     },
-    [squareSize, onAutoSave, marker]
+    [squareSize, onAutoSave, marker, scale]
   );
 
   const onDraw: MouseEventHandler<HTMLCanvasElement> = useCallback(
-    (event) => {
-      const { id } = getCoords(event.clientX, event.clientY, squareSize);
+    ({ clientX, clientY }) => {
+      const { id } = getCoords(clientX, clientY, squareSize, scale);
       if (isDrawing.current && isDrawing.current !== id) {
         isDrawing.current = id;
-        fillRect(event, { squareSize, marker }, true);
+        fillRect(
+          { clientX, clientY },
+          {
+            squareSize,
+            marker,
+            scale,
+          },
+          true
+        );
         onAutoSave();
       }
     },
-    [squareSize, marker, onAutoSave]
+    [squareSize, marker, scale, onAutoSave]
   );
 
   useEffect(() => {
-    const { initialState = new Map() } = config;
-
     drawScene({
       width,
       height,
       squareSize,
-      initialState: initialState ? Object.fromEntries(initialState) : {},
+      initialState: Object.fromEntries(initialState || new Map()),
+      scale,
     });
-  }, [width, height, squareSize, config]);
+  }, [width, height, squareSize, initialState, scale]);
 
   return (
-    <canvas
-      id="scene"
-      className="relative"
-      onPointerDown={onClick}
-      onPointerUp={() => (isDrawing.current = null)}
-      onMouseMove={onDraw}
-      width={width}
-      height={height}
-    />
+    <div
+      className="grid max-w-[80vh] max-h-[80vh] overflow-auto"
+      style={{ gridTemplateAreas: '"yl xt yr" "yl c yr" "yl xb yr' }}
+    >
+      <AxisX sticky gridArea="xt" />
+      <AxisY sticky gridArea="yl" />
+      <div
+        className="bg-cover bg-no-repeat"
+        style={{
+          backgroundImage: `url(${pattern})`,
+        }}
+      >
+        <canvas
+          id="scene"
+          data-testid="scene"
+          className="relative"
+          style={{ gridArea: "c" }}
+          onPointerDown={onClick}
+          onPointerUp={() => (isDrawing.current = null)}
+          onMouseMove={onDraw}
+          width={width * (scale || 1)}
+          height={height * (scale || 1)}
+        />
+      </div>
+      <AxisY gridArea="yr" />
+      <AxisX gridArea="xb" />
+    </div>
   );
 };
