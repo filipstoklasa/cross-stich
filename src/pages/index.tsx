@@ -1,7 +1,8 @@
+import { AxisX, AxisY } from "@/features/axis";
 import { Box } from "@chakra-ui/react";
-import { Canvas } from "@/features/Canvas";
-import { ControlsDrawer } from "@/features/Controls/ControlsDrawer";
-import { Scale } from "@/features/Scale";
+import { Canvas } from "@/features/canvas/canvas";
+import { ControlsDrawer } from "@/features/controls-drawer/controls-drawer";
+import { Scale } from "@/features/scale";
 
 const App = () => (
   <>
@@ -16,7 +17,16 @@ const App = () => (
       <Scale />
     </Box>
     <div className="relative flex justify-center items-center h-[100vh]">
-      <Canvas />
+      <div
+        className="grid max-w-[80vh] max-h-[80vh] overflow-auto"
+        style={{ gridTemplateAreas: '"yl xt yr" "yl c yr" "yl xb yr' }}
+      >
+        <AxisX sticky gridArea="xt" />
+        <AxisY sticky gridArea="yl" />
+        <Canvas />
+        <AxisY gridArea="yr" />
+        <AxisX gridArea="xb" />
+      </div>
     </div>
   </>
 );
