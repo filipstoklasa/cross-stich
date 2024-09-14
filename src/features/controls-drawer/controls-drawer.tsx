@@ -1,5 +1,5 @@
 import { Controls } from "./controls/controls";
-import { Drawer } from "@/components/drawer/drawer";
+import { Drawer } from "@/components/Drawer/drawer";
 import { Version } from "@/components/version";
 
 export const ControlsDrawer = () => (
