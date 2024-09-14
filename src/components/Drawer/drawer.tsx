@@ -8,7 +8,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import type { PropsWithChildren, ReactNode } from "react";
-import { DrawerContext } from "./crawer.context";
+import { DrawerContext } from "./drawer.context";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { IconButton } from "@chakra-ui/react";
 
