@@ -10,7 +10,7 @@ import { FileButton } from "@/components/file-button";
 import { getBase64 } from "../utils/get-base64";
 import { getText } from "@/features/controls-drawer/controls/utils/get-text";
 import { useConfig } from "@/global-context/config/config";
-import { useDrawer } from "@/components/Drawer/drawer.context";
+import { useDrawer } from "@/components/drawer/drawer.context";
 
 export const LoadStatusControls = () => {
   const toast = useToast();
