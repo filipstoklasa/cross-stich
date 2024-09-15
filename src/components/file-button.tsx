@@ -15,6 +15,10 @@ export const FileButton = ({
 }: PropsWithChildren<FileButtonProps>) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const onInputClick = () => {
+    inputRef.current?.click();
+  };
+
   const onInputChange = ({
     target: { files },
   }: ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +27,7 @@ export const FileButton = ({
 
   return (
     <>
-      <Button onClick={inputRef.current?.click}>{children}</Button>
+      <Button onClick={onInputClick}>{children}</Button>
       <input
         data-testid={testId || "file-input"}
         ref={inputRef}
