@@ -11,13 +11,17 @@ export const ColorButton = withLabel(
   ({ color, onChange }: PropsWithChildren<ColorButtonProps>) => {
     const inputRef = useRef<HTMLInputElement>(null);
 
+    const onInputClick = () => {
+      inputRef.current?.click();
+    };
+
     const onInputChange = ({
       target: { value },
     }: ChangeEvent<HTMLInputElement>) => onChange(value);
 
     return (
       <Box position="relative">
-        <Button onClick={inputRef.current?.click} backgroundColor={color}>
+        <Button onClick={onInputClick} backgroundColor={color}>
           <input
             ref={inputRef}
             value={color}
