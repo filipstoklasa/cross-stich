@@ -138,8 +138,8 @@ export const drawScene = ({
     ctx.scale(scale, scale);
   }
 
-  for (let x = 0; x <= width; x += squareSize) {
-    for (let y = 0; y <= height; y += squareSize) {
+  for (let x = 0; x < width; x += squareSize) {
+    for (let y = 0; y < height; y += squareSize) {
       const marker = initialState?.[`${x}-${y}`];
       drawRect({ x, y, marker }, squareSize);
     }
